@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title><ui:insert name="title">Title</ui:insert></title>
+                    <h:outputStylesheet library="css" name="jsfcrud.css"/>
+                    <h:outputScript library="js" name="jsfcrud.js"/>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            
+            <p:growl id="growl" life="3000" />
+            
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="50" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Elrejtés" collapsible="true">
+                    <h:form id="menu">
+                        <p:menu>
+                            <p:menuitem value="Dashboard"  outcome="/pages/index" update="contentPanel"  icon="ui-icon-home" />
+                            <p:menuitem value="Ügyfelek"  outcome="/pages/customer/List" update="contentPanel" icon="ui-icon-person" />
+                            <p:menuitem value="Dolgozók"  outcome="/pages/employee/List" update="contentPanel" icon="ui-icon-person" />
+                            <p:menuitem value="Dolgozói csoportok"  outcome="/pages/employeeGroup/List" update="contentPanel" icon="ui-icon-person" />
+                            <p:menuitem value="Tételek"  outcome="/pages/payItem/List" update="contentPanel" icon="ui-icon-person" />
+                            <p:menuitem value="Projektek"  outcome="/pages/project/List" update="contentPanel" icon="ui-icon-person" />
+                            <p:menuitem value="Projekt fázisok"  outcome="/pages/projectPhase/List" update="contentPanel" />
+                            <p:menuitem value="Skillek"  outcome="/pages/skill/List" update="contentPanel" icon="ui-icon-person" />
+                            <p:menuitem value="Felhasználók"  outcome="/pages/user/List" update="contentPanel" icon="ui-icon-person" />
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <ui:insert name="body"/>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

@@ -1,9 +1,2 @@
-/munkaNyilvantartoRendszer/nbproject/private/
-/munkaNyilvantartoRendszer/munkaNyilvantartoRendszer-war/nbproject/private/
-/munkaNyilvantartoRendszer/munkaNyilvantartoRendszer-ejb/nbproject/private/
-/munkaNyilvantartoRendszer/dist/
-/munkaNyilvantartoRendszer/build/
-/munkaNyilvantartoRendszer/munkaNyilvantartoRendszer-ejb/build/
-/munkaNyilvantartoRendszer/munkaNyilvantartoRendszer-ejb/dist/
-/munkaNyilvantartoRendszer/munkaNyilvantartoRendszer-war/dist/
-/munkaNyilvantartoRendszer/munkaNyilvantartoRendszer-war/build/
+/target
+/target/*
