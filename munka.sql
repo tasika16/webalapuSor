@@ -1,7 +1,7 @@
 /*
 Adminok, akik be tudnak lépni
 */
-CREATE TABLE "USER" (
+CREATE TABLE WEBUSER (
   ID INT not null primary key
         GENERATED ALWAYS AS IDENTITY
         (START WITH 1, INCREMENT BY 1),
