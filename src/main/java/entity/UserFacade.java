@@ -7,7 +7,11 @@ package entity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -28,4 +32,19 @@ public class UserFacade extends AbstractFacade<User> {
         super(User.class);
     }
     
+    public User findUserByCredentiels(String email, String password) {
+        TypedQuery<User> query = em.createNamedQuery("User.findByEmail", User.class)
+                .setParameter("email", email);
+        
+        User user = null;
+        try {
+            user = query.getSingleResult();
+        } catch (NoResultException e) { ; }
+        
+        if (user == null || !user.checkPassword(password)) {
+            return null;
+        }
+        
+        return user;
+    }
 }
