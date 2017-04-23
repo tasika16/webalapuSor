@@ -1,22 +1,14 @@
 package entity;
 
-import entity.util.JsfUtil;
-import entity.util.JsfUtil.PersistAction;
-
 import java.io.Serializable;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.PieChartModel;
@@ -34,7 +26,6 @@ public class DashboardController implements Serializable {
     public void init() {
         createProjectStatusModel();
         createRunningProjectBarModel();
-        
     }
  
     public PieChartModel getProjectStatusModel() {

@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "EMPLOYEE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e WHERE e.softDeleted <> true")
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e WHERE e.softDeleted is null OR e.softDeleted = false")
     , @NamedQuery(name = "Employee.findById", query = "SELECT e FROM Employee e WHERE e.id = :id")
-    , @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name and e.softDeleted <> true")
-    , @NamedQuery(name = "Employee.findByPhoneNumber", query = "SELECT e FROM Employee e WHERE e.phoneNumber = :phoneNumber and e.softDeleted <> true")
+    , @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name AND (e.softDeleted is null OR e.softDeleted = false)")
+    , @NamedQuery(name = "Employee.findByPhoneNumber", query = "SELECT e FROM Employee e WHERE e.phoneNumber = :phoneNumber AND (e.softDeleted is null OR e.softDeleted = false)")
 })
 public class Employee implements Serializable {
 

@@ -95,7 +95,7 @@ public class EmployeeController implements Serializable {
                 if (cause != null) {
                     msg = cause.getLocalizedMessage();
                 }
-                if (msg.length() > 0) {
+                if (msg != null && msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
                     JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

@@ -16,16 +16,19 @@
                         <p:inputText id="name" value="#{employeeController.selected.name}" title="#{bundle.EditEmployeeTitle_name}" required="true" requiredMessage="#{bundle.EditEmployeeRequiredMessage_name}"/>
                         <p:outputLabel value="#{bundle.EditEmployeeLabel_phoneNumber}" for="phoneNumber" />
                         <p:inputText id="phoneNumber" value="#{employeeController.selected.phoneNumber}" title="#{bundle.EditEmployeeTitle_phoneNumber}" required="true" requiredMessage="#{bundle.EditEmployeeRequiredMessage_phoneNumber}"/>
-                        <p:outputLabel value="#{bundle.EditEmployeeLabel_phoneNumber}" for="hourlyWage" />
+                        <p:outputLabel value="Órabér" for="hourlyWage" />
                         <p:inputText id="hourlyWage" value="#{employeeController.selected.hourlyWage}" title="Órabér" required="true" requiredMessage="Órabér kitöltése kötelező!"/>
                         <p:outputLabel value="#{bundle.EditEmployeeLabel_employeeGroupId}" for="employeeGroupId" />
                         <p:selectOneMenu id="employeeGroupId" value="#{employeeController.selected.employeeGroupId}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{employeeGroupController.itemsAvailableSelectOne}"
-                                           var="employeeItem"
-                                           itemValue="#{employeeItem}"
-                                           itemLabel="#{employeeItem.name}"/>
+                                           var="groupItem"
+                                           itemValue="#{groupItem}"
+                                           itemLabel="#{groupItem.name}"/>
                         </p:selectOneMenu>
+                        <p:selectManyCheckbox id="skillCollection" value="#{employeeController.selected.skillCollection}" layout="grid" columns="1">
+                            <f:selectItems value="#{skillController.itemsAvailableSelectMany}" var="skillItem" itemLabel="#{skillItem.name}" itemValue="#{skillItem}" />
+                        </p:selectManyCheckbox>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{employeeController.update}" value="#{bundle.Save}" update="display,:EmployeeListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmployeeEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="EmployeeEditDialog.hide()"/>

@@ -30,15 +30,21 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProjectPhaseTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProjectPhaseTitle_name}"/>
                             </f:facet>
                             <h:outputText value="#{item.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Project"/>
+                            </f:facet>
+                            <h:outputText value="#{item.projectId.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Státusz"/>
+                            </f:facet>
+                            <h:outputText value="#{(item.completed) ? 'Lezárt' : 'Nyitott'}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{projectPhaseController.prepareCreate}" update=":ProjectPhaseCreateForm" oncomplete="PF('ProjectPhaseCreateDialog').show()"/>

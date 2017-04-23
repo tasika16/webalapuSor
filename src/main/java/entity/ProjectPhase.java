@@ -30,14 +30,14 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author Doink
  */
+
 @Entity
 @Table(name = "PROJECT_PHASE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProjectPhase.findAll", query = "SELECT p FROM ProjectPhase p")
     , @NamedQuery(name = "ProjectPhase.findById", query = "SELECT p FROM ProjectPhase p WHERE p.id = :id")
-    , @NamedQuery(name = "ProjectPhase.findByName", query = "SELECT p FROM ProjectPhase p WHERE p.name = :name")
-})
+    , @NamedQuery(name = "ProjectPhase.findByName", query = "SELECT p FROM ProjectPhase p WHERE p.name = :name")})
 public class ProjectPhase implements Serializable {
 
     private static final long serialVersionUID = 1L;
