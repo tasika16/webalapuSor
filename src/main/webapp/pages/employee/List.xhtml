@@ -48,6 +48,12 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="Órabér"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hourlyWage}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEmployeeTitle_employeeGroupId}"/>
                             </f:facet>
                             <h:outputText value="#{item.employeeGroupId.name}"/>

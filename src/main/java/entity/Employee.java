@@ -59,6 +59,11 @@ public class Employee implements Serializable {
     @Column(name = "PHONE_NUMBER", nullable = false, length = 255)
     private String phoneNumber;
     
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "HOURLY_WAGE", nullable = false)
+    private Integer hourlyWage;
+    
     @Column(name = "SOFT_DELETED")
     private Boolean softDeleted;
     
@@ -113,6 +118,14 @@ public class Employee implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Integer getHourlyWage() {
+        return hourlyWage;
+    }
+
+    public void setHourlyWage(Integer hourlyWage) {
+        this.hourlyWage = hourlyWage;
     }
 
     public Boolean getSoftDeleted() {

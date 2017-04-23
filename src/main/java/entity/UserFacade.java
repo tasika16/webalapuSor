@@ -8,10 +8,8 @@ package entity;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *

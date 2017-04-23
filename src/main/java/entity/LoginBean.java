@@ -7,7 +7,6 @@ package entity;
 
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -26,7 +25,9 @@ public class LoginBean {
             
     private String email;
     private String password;
-
+    
+    private User currentUser;
+    
     public String getEmail() {
         return email;
     }
@@ -52,10 +53,23 @@ public class LoginBean {
         User user = userFacade.findUserByCredentiels(this.email, this.password);
         
         if (user == null) {
-            FacesContext.getCurrentInstance().addMessage("loginForm", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rossz email vagy jelszó!",""));
+            FacesContext.getCurrentInstance().addMessage("loginForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Rossz email vagy jelszó!",""));
             return null;
         } else {
+            currentUser = user;
             return "index";
         }
+    }
+    
+    public String logout(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/faces/pages/login";
+    }
+    
+    public Boolean isLoggedIn(){
+        return this.currentUser != null;
+    }
+    public User getCurrentUser(){
+        return this.currentUser;
     }
 }

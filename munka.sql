@@ -75,6 +75,7 @@ CREATE TABLE EMPLOYEE (
         (START WITH 1, INCREMENT BY 1),
     NAME varchar(255) not null,
     PHONE_NUMBER varchar(255) not null,
+	HOURLY_WAGE INT not null,
     EMPLOYEE_GROUP_ID int REFERENCES EMPLOYEE_GROUP(ID),
     SOFT_DELETED boolean default false
 );
