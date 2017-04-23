@@ -40,24 +40,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Project implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "CREATED_AT", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    private Date createdAt = new Date();
+    
     @Column(name = "CLOSED_AT")
     @Temporal(TemporalType.DATE)
     private Date closedAt;
+    
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Customer customerId;
@@ -69,10 +74,10 @@ public class Project implements Serializable {
         this.id = id;
     }
 
-    public Project(Integer id, String name, Date createdAt) {
+    public Project(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
+        this.createdAt = new Date();
     }
 
     public Integer getId() {

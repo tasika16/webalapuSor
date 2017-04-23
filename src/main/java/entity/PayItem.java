@@ -41,13 +41,16 @@ public class PayItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
+    
     @Column(name = "VALUE")
     private Integer value;
+    
     @JoinColumn(name = "PROJECT_PHASE_ID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private ProjectPhase projectPhaseId;

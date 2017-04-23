@@ -12,8 +12,6 @@
             <h:form id="EmployeeGroupEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{employeeGroupController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditEmployeeGroupLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{employeeGroupController.selected.id}" title="#{bundle.EditEmployeeGroupTitle_id}" required="true" requiredMessage="#{bundle.EditEmployeeGroupRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.EditEmployeeGroupLabel_name}" for="name" />
                         <p:inputText id="name" value="#{employeeGroupController.selected.name}" title="#{bundle.EditEmployeeGroupTitle_name}" required="true" requiredMessage="#{bundle.EditEmployeeGroupRequiredMessage_name}"/>
                     </p:panelGrid>

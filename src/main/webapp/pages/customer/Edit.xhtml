@@ -12,8 +12,6 @@
             <h:form id="CustomerEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{customerController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditCustomerLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{customerController.selected.id}" title="#{bundle.EditCustomerTitle_id}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.EditCustomerLabel_name}" for="name" />
                         <p:inputText id="name" value="#{customerController.selected.name}" title="#{bundle.EditCustomerTitle_name}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_name}"/>
                         <p:outputLabel value="#{bundle.EditCustomerLabel_phoneNumber}" for="phoneNumber" />

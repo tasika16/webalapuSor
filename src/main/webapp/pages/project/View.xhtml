@@ -18,14 +18,14 @@
                         <h:outputText value="#{projectController.selected.name}" title="#{bundle.ViewProjectTitle_name}"/>
                         <h:outputText value="#{bundle.ViewProjectLabel_createdAt}"/>
                         <h:outputText value="#{projectController.selected.createdAt}" title="#{bundle.ViewProjectTitle_createdAt}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="yyyy.MM.dd" />
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewProjectLabel_closedAt}"/>
                         <h:outputText value="#{projectController.selected.closedAt}" title="#{bundle.ViewProjectTitle_closedAt}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="yyyy.MM.dd" />
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewProjectLabel_customerId}"/>
-                        <h:outputText value="#{projectController.selected.customerId}" title="#{bundle.ViewProjectTitle_customerId}"/>
+                        <h:outputText value="#{projectController.selected.customerId.name}" title="#{bundle.ViewProjectTitle_customerId}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ProjectViewDialog.hide()"/>
                 </h:panelGroup>

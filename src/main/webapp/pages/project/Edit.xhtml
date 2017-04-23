@@ -12,20 +12,17 @@
             <h:form id="ProjectEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{projectController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditProjectLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{projectController.selected.id}" title="#{bundle.EditProjectTitle_id}" required="true" requiredMessage="#{bundle.EditProjectRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.EditProjectLabel_name}" for="name" />
                         <p:inputText id="name" value="#{projectController.selected.name}" title="#{bundle.EditProjectTitle_name}" required="true" requiredMessage="#{bundle.EditProjectRequiredMessage_name}"/>
-                        <p:outputLabel value="#{bundle.EditProjectLabel_createdAt}" for="createdAt" />
-                        <p:calendar id="createdAt" pattern="MM/dd/yyyy" value="#{projectController.selected.createdAt}" title="#{bundle.EditProjectTitle_createdAt}" required="true" requiredMessage="#{bundle.EditProjectRequiredMessage_createdAt}" showOn="button"/>
                         <p:outputLabel value="#{bundle.EditProjectLabel_closedAt}" for="closedAt" />
-                        <p:calendar id="closedAt" pattern="MM/dd/yyyy" value="#{projectController.selected.closedAt}" title="#{bundle.EditProjectTitle_closedAt}"  showOn="button"/>
+                        <p:calendar id="closedAt" pattern="yyyy.MM.dd" value="#{projectController.selected.closedAt}" title="#{bundle.EditProjectTitle_closedAt}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditProjectLabel_customerId}" for="customerId" />
                         <p:selectOneMenu id="customerId" value="#{projectController.selected.customerId}" required="true" requiredMessage="#{bundle.EditProjectRequiredMessage_customerId}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{customerController.itemsAvailableSelectOne}"
-                                           var="customerIdItem"
-                                           itemValue="#{customerIdItem}"/>
+                                           var="customerItem"
+                                           itemValue="#{customerItem}"
+                                           itemLabel="#{customerItem.name}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{projectController.update}" value="#{bundle.Save}" update="display,:ProjectListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProjectEditDialog');"/>

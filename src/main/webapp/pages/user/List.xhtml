@@ -20,8 +20,9 @@
                                  selectionMode="single" selection="#{userController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,50,100"
+                                 emptyMessage="A lista üres..."
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>

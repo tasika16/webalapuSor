@@ -12,8 +12,6 @@
             <h:form id="SkillEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{skillController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditSkillLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{skillController.selected.id}" title="#{bundle.EditSkillTitle_id}" required="true" requiredMessage="#{bundle.EditSkillRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.EditSkillLabel_name}" for="name" />
                         <p:inputText id="name" value="#{skillController.selected.name}" title="#{bundle.EditSkillTitle_name}" required="true" requiredMessage="#{bundle.EditSkillRequiredMessage_name}"/>
                     </p:panelGrid>

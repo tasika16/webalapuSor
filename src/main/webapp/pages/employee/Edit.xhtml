@@ -12,20 +12,17 @@
             <h:form id="EmployeeEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{employeeController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditEmployeeLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{employeeController.selected.id}" title="#{bundle.EditEmployeeTitle_id}" required="true" requiredMessage="#{bundle.EditEmployeeRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.EditEmployeeLabel_name}" for="name" />
                         <p:inputText id="name" value="#{employeeController.selected.name}" title="#{bundle.EditEmployeeTitle_name}" required="true" requiredMessage="#{bundle.EditEmployeeRequiredMessage_name}"/>
                         <p:outputLabel value="#{bundle.EditEmployeeLabel_phoneNumber}" for="phoneNumber" />
                         <p:inputText id="phoneNumber" value="#{employeeController.selected.phoneNumber}" title="#{bundle.EditEmployeeTitle_phoneNumber}" required="true" requiredMessage="#{bundle.EditEmployeeRequiredMessage_phoneNumber}"/>
-                        <p:outputLabel value="#{bundle.EditEmployeeLabel_softDeleted}" for="softDeleted" />
-                        <p:selectBooleanCheckbox id="softDeleted" value="#{employeeController.selected.softDeleted}" />
                         <p:outputLabel value="#{bundle.EditEmployeeLabel_employeeGroupId}" for="employeeGroupId" />
                         <p:selectOneMenu id="employeeGroupId" value="#{employeeController.selected.employeeGroupId}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{employeeGroupController.itemsAvailableSelectOne}"
-                                           var="employeeGroupIdItem"
-                                           itemValue="#{employeeGroupIdItem}"/>
+                                           var="employeeItem"
+                                           itemValue="#{employeeItem}"
+                                           itemLabel="#{employeeItem.name}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{employeeController.update}" value="#{bundle.Save}" update="display,:EmployeeListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmployeeEditDialog');"/>

@@ -39,22 +39,27 @@ import javax.xml.bind.annotation.XmlTransient;
 public class ProjectPhase implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 512)
     @Column(name = "NAME", nullable = false, length = 512)
     private String name;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "VALUE", nullable = false)
     private int value;
+    
     @ManyToMany(mappedBy = "projectPhaseCollection")
     private Collection<Employee> employeeCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectPhaseId")
     private Collection<PayItem> payItemCollection;
 

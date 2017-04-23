@@ -36,16 +36,19 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Skill implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
+    
     @ManyToMany(mappedBy = "skillCollection")
     private Collection<Employee> employeeCollection;
 

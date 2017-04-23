@@ -18,10 +18,8 @@
                         <h:outputText value="#{employeeController.selected.name}" title="#{bundle.ViewEmployeeTitle_name}"/>
                         <h:outputText value="#{bundle.ViewEmployeeLabel_phoneNumber}"/>
                         <h:outputText value="#{employeeController.selected.phoneNumber}" title="#{bundle.ViewEmployeeTitle_phoneNumber}"/>
-                        <h:outputText value="#{bundle.ViewEmployeeLabel_softDeleted}"/>
-                        <p:selectBooleanCheckbox value="#{employeeController.selected.softDeleted}" disabled="true"/>
                         <h:outputText value="#{bundle.ViewEmployeeLabel_employeeGroupId}"/>
-                        <h:outputText value="#{employeeController.selected.employeeGroupId}" title="#{bundle.ViewEmployeeTitle_employeeGroupId}"/>
+                        <h:outputText value="#{employeeController.selected.employeeGroupId.name}" title="#{bundle.ViewEmployeeTitle_employeeGroupId}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="EmployeeViewDialog.hide()"/>
                 </h:panelGroup>

@@ -44,17 +44,21 @@ public class Customer implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
+    
     @Size(max = 255)
     @Column(name = "PHONE_NUMBER", length = 255)
     private String phoneNumber;
+    
     @Size(max = 1024)
     @Column(name = "ADDRESS", length = 1024)
     private String address;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private Collection<Project> projectCollection;
 

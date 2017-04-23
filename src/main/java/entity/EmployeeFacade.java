@@ -5,9 +5,11 @@
  */
 package entity;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -26,6 +28,17 @@ public class EmployeeFacade extends AbstractFacade<Employee> {
 
     public EmployeeFacade() {
         super(Employee.class);
+    }
+
+    @Override
+    public void remove(Employee entity) {
+        entity.setSoftDeleted(Boolean.TRUE);
+        edit(entity);
+    }
+
+    @Override
+    public List<Employee> findAll() {
+        return em.createNamedQuery("Employee.findAll", Employee.class).getResultList();
     }
     
 }

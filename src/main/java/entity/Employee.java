@@ -33,11 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "EMPLOYEE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e WHERE e.softDeleted <> true")
     , @NamedQuery(name = "Employee.findById", query = "SELECT e FROM Employee e WHERE e.id = :id")
-    , @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name")
-    , @NamedQuery(name = "Employee.findByPhoneNumber", query = "SELECT e FROM Employee e WHERE e.phoneNumber = :phoneNumber")
-    , @NamedQuery(name = "Employee.findBySoftDeleted", query = "SELECT e FROM Employee e WHERE e.softDeleted = :softDeleted")})
+    , @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name and e.softDeleted <> true")
+    , @NamedQuery(name = "Employee.findByPhoneNumber", query = "SELECT e FROM Employee e WHERE e.phoneNumber = :phoneNumber and e.softDeleted <> true")
+})
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,28 +46,34 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "PHONE_NUMBER", nullable = false, length = 255)
     private String phoneNumber;
+    
     @Column(name = "SOFT_DELETED")
     private Boolean softDeleted;
+    
     @JoinTable(name = "EMPLOYEE_TO_PROJECT_PHASE", joinColumns = {
         @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "PROJECT_PHASE_ID", referencedColumnName = "ID", nullable = false)})
     @ManyToMany
     private Collection<ProjectPhase> projectPhaseCollection;
+    
     @JoinTable(name = "EMPLOYEE_TO_SKILL", joinColumns = {
         @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "SKILL_ID", referencedColumnName = "ID", nullable = false)})
     @ManyToMany
     private Collection<Skill> skillCollection;
+    
     @JoinColumn(name = "EMPLOYEE_GROUP_ID", referencedColumnName = "ID")
     @ManyToOne
     private EmployeeGroup employeeGroupId;
