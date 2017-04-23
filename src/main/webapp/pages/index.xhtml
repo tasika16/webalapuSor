@@ -8,13 +8,13 @@
 
     <ui:composition template="/pages/template.xhtml">
 
-
         <ui:define name="title">
             <h:outputText value="Dashboard"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            Dashboard
+            <p:chart type="pie" model="#{dashboardController.projectStatusModel}" style="width:400px; height:300px"/>
+            <p:chart type="bar" model="#{dashboardController.runningProjectBarModel}" style="height:300px"/>
         </ui:define>
     </ui:composition>
 

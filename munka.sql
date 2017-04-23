@@ -9,7 +9,7 @@ CREATE TABLE WEBUSER (
   EMAIL varchar(255) not null,
   PASSWORD varchar(60) /*bcrypt*/
 );
-INSERT INTO WEBUSER (NAME,EMAIL,PASSWORD) VALUES('Admin','admin@localhost.dev','$2a$06$i3E7wC6aSX4plZp.24HoC.fchLowVA3FUEFLhJ0frKvSyY/Hmpccq')
+INSERT INTO WEBUSER (NAME,EMAIL,PASSWORD) VALUES('Admin','admin@localhost.dev','$2a$06$i3E7wC6aSX4plZp.24HoC.fchLowVA3FUEFLhJ0frKvSyY/Hmpccq');
 
 
 /*
@@ -46,7 +46,8 @@ CREATE TABLE PROJECT_PHASE (
         GENERATED ALWAYS AS IDENTITY
         (START WITH 1, INCREMENT BY 1),
   NAME varchar(512) not null,
-  VALUE DECIMAL not null
+  COMPLETED boolean default false,
+  PROJECT_ID INT not null REFERENCES PROJECT(ID)
 );
 
 /*

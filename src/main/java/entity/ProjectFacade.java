@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,4 +29,16 @@ public class ProjectFacade extends AbstractFacade<Project> {
         super(Project.class);
     }
     
+    public Long findProjectCountByStatus(boolean isClosed){
+        if (isClosed) {
+            return (Long) em.createQuery("SELECT count(p) FROM Project p WHERE p.closedAt is not null").getSingleResult();
+        } else {
+            return (Long) em.createQuery("SELECT count(p) FROM Project p WHERE p.closedAt is null").getSingleResult();
+        }
+    }
+    
+    public List<Project> findOpenProjects(){
+        return em.createQuery("SELECT p FROM Project p WHERE p.closedAt is null", Project.class)
+                .getResultList();
+    }
 }

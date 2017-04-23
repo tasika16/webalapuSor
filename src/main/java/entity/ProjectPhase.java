@@ -14,7 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ProjectPhase.findAll", query = "SELECT p FROM ProjectPhase p")
     , @NamedQuery(name = "ProjectPhase.findById", query = "SELECT p FROM ProjectPhase p WHERE p.id = :id")
     , @NamedQuery(name = "ProjectPhase.findByName", query = "SELECT p FROM ProjectPhase p WHERE p.name = :name")
-    , @NamedQuery(name = "ProjectPhase.findByValue", query = "SELECT p FROM ProjectPhase p WHERE p.value = :value")})
+})
 public class ProjectPhase implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,13 +54,15 @@ public class ProjectPhase implements Serializable {
     @Column(name = "NAME", nullable = false, length = 512)
     private String name;
     
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "VALUE", nullable = false)
-    private int value;
+    @Column(name = "COMPLETED")
+    private Boolean completed;
     
     @ManyToMany(mappedBy = "projectPhaseCollection")
     private Collection<Employee> employeeCollection;
+
+    @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID", nullable = false)
+    @ManyToOne(optional = false)
+    private Project projectId;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectPhaseId")
     private Collection<PayItem> payItemCollection;
@@ -70,10 +74,9 @@ public class ProjectPhase implements Serializable {
         this.id = id;
     }
 
-    public ProjectPhase(Integer id, String name, int value) {
+    public ProjectPhase(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.value = value;
     }
 
     public Integer getId() {
@@ -92,12 +95,12 @@ public class ProjectPhase implements Serializable {
         this.name = name;
     }
 
-    public int getValue() {
-        return value;
+    public Boolean getCompleted() {
+        return completed;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
     }
 
     @XmlTransient
@@ -116,6 +119,14 @@ public class ProjectPhase implements Serializable {
 
     public void setPayItemCollection(Collection<PayItem> payItemCollection) {
         this.payItemCollection = payItemCollection;
+    }
+
+    public Project getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Project projectId) {
+        this.projectId = projectId;
     }
 
     @Override

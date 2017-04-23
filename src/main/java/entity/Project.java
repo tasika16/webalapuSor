@@ -6,8 +6,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,6 +69,9 @@ public class Project implements Serializable {
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Customer customerId;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
+    private Collection<ProjectPhase> projectPhaseCollection;
 
     public Project() {
     }
@@ -120,6 +126,14 @@ public class Project implements Serializable {
         this.customerId = customerId;
     }
 
+    public Collection<ProjectPhase> getProjectPhaseCollection() {
+        return projectPhaseCollection;
+    }
+
+    public void setProjectPhaseCollection(Collection<ProjectPhase> projectPhaseCollection) {
+        this.projectPhaseCollection = projectPhaseCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
