@@ -9,6 +9,8 @@ CREATE TABLE WEBUSER (
   EMAIL varchar(255) not null,
   PASSWORD varchar(60) /*bcrypt*/
 );
+INSERT INTO WEBUSER (NAME,EMAIL,PASSWORD) VALUES('Admin','admin@localhost.dev','$2a$06$i3E7wC6aSX4plZp.24HoC.fchLowVA3FUEFLhJ0frKvSyY/Hmpccq')
+
 
 /*
 Vásárló/megbízó w/e.
