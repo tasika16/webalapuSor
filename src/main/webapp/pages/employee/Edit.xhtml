@@ -26,7 +26,8 @@
                                            itemValue="#{groupItem}"
                                            itemLabel="#{groupItem.name}"/>
                         </p:selectOneMenu>
-                        <p:selectManyCheckbox id="skillCollection" value="#{employeeController.selected.skillCollection}" layout="grid" columns="1">
+                        <p:outputLabel value="Kompetenciák" for="skillCollection" />
+                        <p:selectManyCheckbox id="skillCollection" value="#{employeeController.selected.skillCollection}" converter="skillConverter" layout="grid" columns="1">
                             <f:selectItems value="#{skillController.itemsAvailableSelectMany}" var="skillItem" itemLabel="#{skillItem.name}" itemValue="#{skillItem}" />
                         </p:selectManyCheckbox>
                     </p:panelGrid>

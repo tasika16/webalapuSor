@@ -119,7 +119,7 @@ public class SkillController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Skill.class)
+    @FacesConverter(forClass = Skill.class, value = "skillConverter")
     public static class SkillControllerConverter implements Converter {
 
         @Override
