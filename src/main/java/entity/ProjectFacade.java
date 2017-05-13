@@ -41,4 +41,9 @@ public class ProjectFacade extends AbstractFacade<Project> {
         return em.createQuery("SELECT p FROM Project p JOIN p.projectPhaseCollection phase WHERE p.closedAt is null", Project.class)
                 .getResultList();
     }
+    
+    public List<Project> findClosedProjects(){
+        return em.createQuery("SELECT p FROM Project p JOIN p.projectPhaseCollection phase WHERE p.closedAt is not null", Project.class)
+                .getResultList();
+    }
 }

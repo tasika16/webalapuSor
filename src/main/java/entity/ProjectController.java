@@ -25,6 +25,8 @@ public class ProjectController implements Serializable {
     private entity.ProjectFacade ejbFacade;
     private List<Project> items = null;
     private Project selected;
+    
+    private boolean showArchived = false;
 
     public ProjectController() {
     }
@@ -35,6 +37,13 @@ public class ProjectController implements Serializable {
 
     public void setSelected(Project selected) {
         this.selected = selected;
+    }
+    public boolean isShowArchived() {
+        return showArchived;
+    }
+
+    public void setShowArchived(boolean showArchived) {
+        this.showArchived = showArchived;
     }
 
     protected void setEmbeddableKeys() {
@@ -51,6 +60,15 @@ public class ProjectController implements Serializable {
         selected = new Project();
         initializeEmbeddableKey();
         return selected;
+    }
+    
+    public void toggleArchived() {
+        this.showArchived = !this.showArchived;
+        if (this.showArchived) {
+            items = getFacade().findClosedProjects();
+        } else {
+            items = getFacade().findOpenProjects();
+        }
     }
 
     public void create() {
@@ -74,7 +92,7 @@ public class ProjectController implements Serializable {
 
     public List<Project> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().findOpenProjects();
         }
         return items;
     }
