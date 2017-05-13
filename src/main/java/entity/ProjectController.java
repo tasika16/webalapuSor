@@ -16,9 +16,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("projectController")
-@SessionScoped
+@ViewScoped
 public class ProjectController implements Serializable {
 
     @EJB
@@ -27,10 +28,11 @@ public class ProjectController implements Serializable {
     private Project selected;
     
     private boolean showArchived = false;
-
-    public ProjectController() {
+    
+    public String openProject(Integer id) {
+        return "/pages/project/Open.xhtml?faces-redirect=true;includeViewParams=true&id=" + id;
     }
-
+    
     public Project getSelected() {
         return selected;
     }

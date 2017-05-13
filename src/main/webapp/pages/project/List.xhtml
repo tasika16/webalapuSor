@@ -25,9 +25,9 @@
                                  emptyMessage="A lista üres..."
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
+                        <p:ajax event="rowSelect"   update="createButton archivedButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton archivedButton deleteButton"/>
+                        
                         <p:column rendered="false">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProjectTitle_id}"/>
@@ -48,7 +48,7 @@
                                 <f:convertDateTime pattern="yyyy.MM.dd" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column rendered="#{projectController.showArchived}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProjectTitle_closedAt}"/>
                             </f:facet>
@@ -62,11 +62,16 @@
                             </f:facet>
                             <h:outputText value="#{item.customerId.name}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value=""/>
+                            </f:facet>
+                            <p:commandLink value="Megnyitás" action="#{projectController.openProject(item.id)}" ajax="false" style="margin-top:0 !important" />
+                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{projectController.prepareCreate}" update=":ProjectCreateForm" oncomplete="PF('ProjectCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Megnyitás"  disabled="#{empty projectController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{projectController.destroy}" update=":growl,datalist" disabled="#{empty projectController.selected}"/>
-                            <p:commandButton id="editButton" icon="#{(projectController.showArchived) ? 'ui-icon-unlocked' : 'ui-icon-locked'}" value="#{(projectController.showArchived) ? 'Nyitott projektek':'Lezárt Projektek'}" actionListener="#{projectController.toggleArchived()}" update=":growl,:ProjectListForm" />
+                            <p:commandButton id="archivedButton" icon="#{(projectController.showArchived) ? 'ui-icon-unlocked' : 'ui-icon-locked'}" value="#{(projectController.showArchived) ? 'Nyitott projektek':'Lezárt Projektek'}" actionListener="#{projectController.toggleArchived()}" update=":growl,:ProjectListForm" />
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

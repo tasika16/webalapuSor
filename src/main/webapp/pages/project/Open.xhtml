@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/pages/template.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="Projekt - #{projectEditController.project.name}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ProjectForm">
+                <p:panel id="projectPanel" header="#{projectEditController.project.name}">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Megnevezés" />
+                        <h:outputText value="#{projectEditController.project.name}" />
+
+                        <h:outputText value="Ügyfél" />
+                        <h:outputText value="#{projectEditController.project.customerId.name}" />
+
+                        <h:outputText value="Létrehozva" />
+                        <h:outputText value="#{projectEditController.project.createdAt}" />
+
+                        <h:outputText value="Státusz" />
+                        <h:outputText value="#{(projectEditController.project.closedAt == null) ? 'Nyitott' : 'Lezárva: ' + projectEditController.project.closedAt }" />
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel id="phasePanel" header="Munkafázisok">
+                    <p:panelGrid columns="2">
+                        <ui:repeat id="phases" value="#{projectEditController.project.projectPhaseCollection}" var="phase">
+                            <h:outputText value="#{phase.name}" />
+                            <h:outputText value="#{phase.estimatedPrice}" />
+                        </ui:repeat>
+                        <h:outputText value="#{(projectEditController.project.closedAt == null) ? 'Nyitott' : 'Lezárva: ' + projectEditController.project.closedAt }" />
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>
