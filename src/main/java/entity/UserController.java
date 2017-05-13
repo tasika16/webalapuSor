@@ -25,7 +25,11 @@ public class UserController implements Serializable {
     private entity.UserFacade ejbFacade;
     private List<User> items = null;
     private User selected;
-
+    
+    public User.Role[] getRoles() {
+        return User.Role.values();
+    }
+    
     public UserController() {
     }
 

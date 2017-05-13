@@ -21,11 +21,11 @@
             <p:growl id="growl" life="3000" />
             
             <p:layout fullPage="true">
-
+<!--
                 <p:layoutUnit position="north" size="50" resizable="true" closable="true" collapsible="true">
                     Header
                 </p:layoutUnit>
-
+-->
                 <p:layoutUnit position="west" size="175" header="Elrejtés" collapsible="true">
                     <h:form id="menu">
                         <p:menu>
@@ -35,7 +35,7 @@
                             <p:menuitem value="Dolgozói csoportok"  outcome="/pages/employeeGroup/List" update="contentPanel" icon="ui-icon-person" />
                             <p:menuitem value="Projektek"  outcome="/pages/project/List" update="contentPanel" icon="ui-icon-person" />
                             <p:menuitem value="Projekt fázisok"  outcome="/pages/projectPhase/List" update="contentPanel" />
-                            <p:menuitem value="Skillek"  outcome="/pages/skill/List" update="contentPanel" icon="ui-icon-person" />
+                            <p:menuitem value="Kompetenciák"  outcome="/pages/skill/List" update="contentPanel" icon="ui-icon-person" />
                             <p:menuitem value="Felhasználók"  outcome="/pages/user/List" update="contentPanel" icon="ui-icon-person" />
                             <p:menuitem value="Kijelentkezés" action="#{loginBean.logout}" icon="ui-icon-key" />
                         </p:menu>

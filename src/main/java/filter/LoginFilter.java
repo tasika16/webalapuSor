@@ -9,10 +9,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+@WebFilter(filterName = "LoginFilter", urlPatterns = { "*.xhtml" })
 public class LoginFilter implements Filter {
 
     public static final String LOGIN_PAGE = "/faces/pages/login.xhtml";
@@ -23,21 +24,15 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        // managed bean name is exactly the session attribute name
-        LoginBean userManager = (LoginBean) request.getSession().getAttribute("loginBean");
-        
+        LoginBean loginBean = (LoginBean) request.getSession().getAttribute("loginBean");
         String uri = request.getRequestURI();
         if (uri.contains(LOGIN_PAGE) || uri.contains("javax.faces.resource")) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            if (userManager != null) {
-                if (userManager.isLoggedIn()) {
-                    filterChain.doFilter(servletRequest, servletResponse);
-                } else {
-                    response.sendRedirect(request.getContextPath() + LOGIN_PAGE);
-                }
-            } else {
+            if (loginBean == null || !loginBean.isLoggedIn()) {
                 response.sendRedirect(request.getContextPath() + LOGIN_PAGE);
+            } else {
+                filterChain.doFilter(servletRequest, servletResponse);
             }
         }
     }

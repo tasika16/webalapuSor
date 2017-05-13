@@ -14,12 +14,12 @@
                     <p:panelGrid columns="2" rendered="#{userController.selected != null}">
                         <h:outputText value="#{bundle.ViewUserLabel_id}"/>
                         <h:outputText value="#{userController.selected.id}" title="#{bundle.ViewUserTitle_id}"/>
+                        <h:outputText value="Szerepkör"/>
+                        <h:outputText value="#{userController.selected.role.label}" title="Szerepkör"/>
                         <h:outputText value="#{bundle.ViewUserLabel_name}"/>
                         <h:outputText value="#{userController.selected.name}" title="#{bundle.ViewUserTitle_name}"/>
                         <h:outputText value="#{bundle.ViewUserLabel_email}"/>
                         <h:outputText value="#{userController.selected.email}" title="#{bundle.ViewUserTitle_email}"/>
-                        <h:outputText value="#{bundle.ViewUserLabel_password}"/>
-                        <h:outputText value="#{userController.selected.password}" title="#{bundle.ViewUserTitle_password}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="UserViewDialog.hide()"/>
                 </h:panelGroup>

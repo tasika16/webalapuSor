@@ -12,6 +12,13 @@
             <h:form id="UserEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{userController.selected != null}">
+                        <p:outputLabel value="Szerepkör" for="role" />
+                        <p:selectOneMenu id="role" value="#{userController.selected.role}" required="true" requiredMessage="Szerepkör kiválasztása kötelező!">
+                            <f:selectItems value="#{userController.roles}"
+                                           var="item"
+                                           itemValue="#{item}"
+                                           itemLabel="#{item.label}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditUserLabel_name}" for="name" />
                         <p:inputText id="name" value="#{userController.selected.name}" title="#{bundle.EditUserTitle_name}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_name}"/>
                         <p:outputLabel value="#{bundle.EditUserLabel_email}" for="email" />

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,6 +47,12 @@ public class User implements Serializable {
     
     @Basic(optional = false)
     @NotNull
+    @Column(name = "ROLE", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
@@ -59,7 +67,20 @@ public class User implements Serializable {
     @Size(max = 60)
     @Column(name = "PASSWORD", length = 60)
     private String password;
-
+    
+    public static enum Role {
+        ADMIN("Adminisztrátor"), USER("Ügyintéző");
+        String label;
+        
+        Role(String label){
+            this.label = label;
+        }
+        
+        public String getLabel(){
+            return label;
+        }
+    }
+    
     public User() {
     }
 
@@ -79,6 +100,14 @@ public class User implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getName() {

@@ -66,6 +66,14 @@ public class LoginBean {
         return "/faces/pages/login";
     }
     
+    public Boolean isAdmin(){
+        return (this.currentUser != null && User.Role.ADMIN.equals(this.currentUser.getRole()));
+    }
+    
+    public Boolean isUser(){
+        return (this.currentUser != null && User.Role.USER.equals(this.currentUser.getRole()));
+    }
+    
     public Boolean isLoggedIn(){
         return this.currentUser != null;
     }
