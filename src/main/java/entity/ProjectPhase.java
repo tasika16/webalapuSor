@@ -66,6 +66,9 @@ public class ProjectPhase implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectPhaseId")
     private Collection<PayItem> payItemCollection;
+    
+    @Column(name = "ESTIMATED_PRICE")
+    private Integer estimatedPrice;
 
     public ProjectPhase() {
     }
@@ -93,6 +96,14 @@ public class ProjectPhase implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Integer getEstimatedPrice() {
+        return estimatedPrice;
+    }
+
+    public void setEstimatedPrice(Integer estimatedPrice) {
+        this.estimatedPrice = estimatedPrice;
     }
 
     public Boolean getCompleted() {

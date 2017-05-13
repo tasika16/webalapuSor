@@ -10,7 +10,9 @@ CREATE TABLE WEBUSER (
   PASSWORD varchar(60), /*bcrypt*/
   ROLE varchar(255) not null
 );
+/* email:"admin@localhost.dev" // jelszó:"admin" */
 INSERT INTO WEBUSER (NAME,EMAIL,PASSWORD,ROLE) VALUES('Admin','admin@localhost.dev','$2a$06$i3E7wC6aSX4plZp.24HoC.fchLowVA3FUEFLhJ0frKvSyY/Hmpccq','ADMIN');
+/* email:"user@localhost.dev" // jelszó:"admin" */
 INSERT INTO WEBUSER (NAME,EMAIL,PASSWORD,ROLE) VALUES('User','user@localhost.dev','$2a$06$i3E7wC6aSX4plZp.24HoC.fchLowVA3FUEFLhJ0frKvSyY/Hmpccq','USER');
 
 
@@ -34,7 +36,6 @@ CREATE TABLE PROJECT (
         GENERATED ALWAYS AS IDENTITY
         (START WITH 1, INCREMENT BY 1),
   NAME varchar(255) not null,
-  ESTIMATED_PRICE INT not null,
   CUSTOMER_ID INT not null REFERENCES CUSTOMER(ID),
   CREATED_AT DATE not null default CURRENT_DATE,
   CLOSED_AT DATE
@@ -50,6 +51,7 @@ CREATE TABLE PROJECT_PHASE (
         (START WITH 1, INCREMENT BY 1),
   NAME varchar(512) not null,
   COMPLETED boolean default false,
+  ESTIMATED_PRICE INT not null,
   PROJECT_ID INT not null REFERENCES PROJECT(ID)
 );
 

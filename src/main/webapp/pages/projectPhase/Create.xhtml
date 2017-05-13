@@ -21,6 +21,9 @@
                                            itemValue="#{projectItem}"
                                            itemLabel="#{projectItem.name}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="Becsült ár" for="estimatedPrice" />
+                        <p:inputText id="estimatedPrice" value="#{projectPhaseController.selected.estimatedPrice}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{projectPhaseController.create}" value="#{bundle.Save}" update="display,:ProjectPhaseListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProjectPhaseCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProjectPhaseCreateDialog.hide()"/>

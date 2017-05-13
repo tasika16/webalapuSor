@@ -21,8 +21,6 @@
                                            itemValue="#{customerItem}"
                                            itemLabel="#{customerItem.name}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="Becsült ár" for="value" />
-                        <p:inputText id="estimatedPrice" value="#{projectController.selected.estimatedPrice}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{projectController.create}" value="#{bundle.Save}" update="display,:ProjectListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProjectCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProjectCreateDialog.hide()"/>

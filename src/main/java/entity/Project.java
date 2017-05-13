@@ -56,9 +56,6 @@ public class Project implements Serializable {
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
     
-    @Column(name = "ESTIMATED_PRICE")
-    private Integer estimatedPrice;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "CREATED_AT", nullable = false)
@@ -95,14 +92,6 @@ public class Project implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getEstimatedPrice() {
-        return estimatedPrice;
-    }
-
-    public void setEstimatedPrice(Integer estimatedPrice) {
-        this.estimatedPrice = estimatedPrice;
     }
 
     public String getName() {

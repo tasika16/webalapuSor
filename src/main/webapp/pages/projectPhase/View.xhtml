@@ -16,6 +16,8 @@
                         <h:outputText value="#{projectPhaseController.selected.id}" title="#{bundle.ViewProjectPhaseTitle_id}"/>
                         <h:outputText value="#{bundle.ViewProjectPhaseLabel_name}"/>
                         <h:outputText value="#{projectPhaseController.selected.name}" title="#{bundle.ViewProjectPhaseTitle_name}"/>
+                        <h:outputText value="Becsült ár"/>
+                        <h:outputText value="#{projectPhaseController.selected.estimatedPrice}" title="Becsült ár"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ProjectPhaseViewDialog.hide()"/>
                 </h:panelGroup>
