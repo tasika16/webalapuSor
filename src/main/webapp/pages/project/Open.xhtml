@@ -26,7 +26,7 @@
                         <h:outputText value="#{projectEditController.project.createdAt}" />
 
                         <h:outputText value="Státusz:" />
-                        <p:progressBar rendered="#{projectEditController.project.closedAt == null}" value="#{item.progressPercent}" labelTemplate="{value}%" displayOnly="true"/>
+                        <p:progressBar rendered="#{projectEditController.project.closedAt == null}" value="#{projectEditController.project.progressPercent}" labelTemplate="{value}%" displayOnly="true"/>
                         <h:outputText rendered="#{projectEditController.project.closedAt != null}" value="Lezárva: #{projectEditController.project.closedAt}" />
                     </h:panelGrid>
                 </p:panel>
