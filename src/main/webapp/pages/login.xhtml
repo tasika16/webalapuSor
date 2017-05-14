@@ -13,17 +13,10 @@
 
     <ui:define name="body">
         <h:form>
-            <h:panelGrid columns="2" cellpadding="5" id="loginGrid">
-                <h:outputLabel for="email" value="Email" />
-                <p:inputText id="email" value="#{loginBean.email}" />
-
-                <h:outputLabel for="password" value="Password" />
-                <p:password id="password" value="#{loginBean.password}" label="Password" required="true" />
-
-                <p:spacer height="10" />
-                <p:messages id="messages" showDetail="true" autoUpdate="true" />
-                <p:spacer height="10" />
-
+            <h:panelGrid columns="1" cellpadding="5" id="loginGrid" styleClass="login-grid">
+                <h1>Munkanyilvántartó</h1>
+                <p:inputText id="email" value="#{loginBean.email}" label="Email" placeholder="E-mail cím..." required="true" />
+                <p:password id="password" value="#{loginBean.password}" label="Password" placeholder="Jelszó..." required="true" />
                 <h:commandButton action="#{loginBean.login}" value="Belépés" />
             </h:panelGrid>
         </h:form>
