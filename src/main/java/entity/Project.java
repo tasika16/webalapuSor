@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -159,4 +160,15 @@ public class Project implements Serializable {
         return "entity.Project[ id=" + id + " ]";
     }
     
+    public Integer getProgressPercent(){
+        double all = this.projectPhaseCollection.size();
+        double done = 0;
+        Iterator<ProjectPhase> phases = this.projectPhaseCollection.iterator();
+        while(phases.hasNext()) {
+            if (phases.next().getCompleted()) { done++; }
+        }
+        if (all < 1) { return 0; }
+        return (int)(done/all*100);
+    }
+
 }

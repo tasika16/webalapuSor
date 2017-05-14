@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -107,7 +108,7 @@ public class ProjectPhase implements Serializable {
     }
 
     public Boolean getCompleted() {
-        return completed;
+        return Boolean.TRUE.equals(completed);
     }
 
     public void setCompleted(Boolean completed) {
@@ -165,4 +166,12 @@ public class ProjectPhase implements Serializable {
         return "entity.ProjectPhase[ id=" + id + " ]";
     }
     
+    public Integer getFullPrice(){
+        Integer ret = 0;
+        Iterator<PayItem> phases = this.payItemCollection.iterator();
+        while(phases.hasNext()) {
+            ret += phases.next().getValue();
+        }
+        return ret;
+    }
 }

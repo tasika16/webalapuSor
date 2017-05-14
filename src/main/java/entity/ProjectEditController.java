@@ -7,16 +7,12 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,6 +26,7 @@ public class ProjectEditController implements Serializable {
     private entity.ProjectFacade projectFacade;
     private Integer id;
     private Project project;
+    private ProjectPhase selectedPhase;
     
     @PostConstruct
     public void init(){
@@ -45,6 +42,18 @@ public class ProjectEditController implements Serializable {
         this.project = project;
     }
 
+    public ProjectPhase getSelectedPhase() {
+        return selectedPhase;
+    }
+
+    public void setSelectedPhase(ProjectPhase selectedPhase) {
+        this.selectedPhase = selectedPhase;
+    }
+    
+    public void removePhase(ProjectPhase phase) {
+        this.project.getProjectPhaseCollection().remove(phase);
+    }
+    
     public Integer getId() {
         return id;
     }

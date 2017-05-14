@@ -13,33 +13,122 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="ProjectForm">
+            <h:form id="projectForm">
                 <p:panel id="projectPanel" header="#{projectEditController.project.name}">
-                    <p:panelGrid columns="2">
-                        <h:outputText value="Megnevezés" />
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Megnevezés:" />
                         <h:outputText value="#{projectEditController.project.name}" />
 
-                        <h:outputText value="Ügyfél" />
+                        <h:outputText value="Ügyfél:" />
                         <h:outputText value="#{projectEditController.project.customerId.name}" />
 
-                        <h:outputText value="Létrehozva" />
+                        <h:outputText value="Létrehozva:" />
                         <h:outputText value="#{projectEditController.project.createdAt}" />
 
-                        <h:outputText value="Státusz" />
-                        <h:outputText value="#{(projectEditController.project.closedAt == null) ? 'Nyitott' : 'Lezárva: ' + projectEditController.project.closedAt }" />
-                    </p:panelGrid>
+                        <h:outputText value="Státusz:" />
+                        <p:progressBar rendered="#{projectEditController.project.closedAt == null}" value="#{item.progressPercent}" labelTemplate="{value}%" displayOnly="true"/>
+                        <h:outputText rendered="#{projectEditController.project.closedAt != null}" value="Lezárva: #{projectEditController.project.closedAt}" />
+                    </h:panelGrid>
                 </p:panel>
-                <p:panel id="phasePanel" header="Munkafázisok">
-                    <p:panelGrid columns="2">
-                        <ui:repeat id="phases" value="#{projectEditController.project.projectPhaseCollection}" var="phase">
-                            <h:outputText value="#{phase.name}" />
-                            <h:outputText value="#{phase.estimatedPrice}" />
-                        </ui:repeat>
-                        <h:outputText value="#{(projectEditController.project.closedAt == null) ? 'Nyitott' : 'Lezárva: ' + projectEditController.project.closedAt }" />
-                    </p:panelGrid>
+                
+                <p:panel id="projectPhasePanel" header="Munkafázisok">
+                    <p:commandButton id="createPhaseButton" icon="ui-icon-plus" value="Új munkafázis" actionListener="#{projectPhaseController.prepareCreate}" oncomplete="PF('ProjectPhaseCreateDialog').show()" style="margin-bottom:10px;"/>
+                    <p:tabView value="#{projectEditController.project.projectPhaseCollection}" var="phase">
+                        <p:tab title="#{phase.name}">
+                            <div class="col-33">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="Megnevezés:"/>
+                                    <h:outputText value="#{phase.name}" />
+                                    <h:outputText value="Becsült költség:"/>
+                                    <h:outputText value="#{phase.estimatedPrice}" />
+                                    <h:outputText value="Valós költség:"/>
+                                    <h:outputText value="#{phase.fullPrice}" />
+                                    <h:outputText value="Törlés:"/>
+                                    <p:commandLink update=":projectForm" actionListener="#{projectEditController.removePhase(phase)}" title="Törlés" styleClass="ui-icon ui-icon-trash" style="float:left;margin-right:10px" />
+                                </h:panelGrid>                                    
+                            </div>
+                            
+                            <div class="col-33">
+                                <p:dataTable id="employeelist" value="#{phase.employeeCollection}" var="employeeItem"
+                                        selectionMode="single" selection="#{employeeController.selected}"
+                                        paginator="true"
+                                        rowKey="#{employeeItem.id}"
+                                        rows="20"
+                                        rowsPerPageTemplate="20,50,100"
+                                        paginatorPosition="bottom"
+                                        >
+
+                                    <p:ajax event="rowSelect"   update=""/>
+                                    <p:ajax event="rowUnselect" update=""/>
+
+                                    <f:facet name="header">
+                                        <h:outputText value="Dolgozók"/>
+                                    </f:facet>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Név"/>
+                                        </f:facet>
+                                        <h:outputText value="#{employeeItem.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Csoport"/>
+                                        </f:facet>
+                                        <h:outputText value="#{employeeItem.employeeGroupId.name}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                    </f:facet>
+                                </p:dataTable>
+                            </div>
+                            
+                            <div class="col-33">
+                                <p:dataTable id="payitemlist" value="#{phase.payItemCollection}" var="payItem"
+                                         selectionMode="single" selection="#{payItemController.selected}"
+                                         paginator="true"
+                                         rowKey="#{payItem.id}"
+                                         rows="20"
+                                         rowsPerPageTemplate="20,50,100"
+                                         paginatorPosition="bottom"
+                                         >
+
+                                    <p:ajax event="rowSelect"   update=""/>
+                                    <p:ajax event="rowUnselect" update=""/>
+
+                                    <f:facet name="header">
+                                        <h:outputText value="Tételek"/>
+                                    </f:facet>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Kelt."/>
+                                        </f:facet>
+                                        <h:outputText value="#{payItem.createdAt}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListPayItemTitle_name}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{payItem.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Összeg"/>
+                                        </f:facet>
+                                        <h:outputText value="#{payItem.value}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                    </f:facet>
+                                </p:dataTable>
+
+                            </div>
+                            
+                            <div class="clearfix"></div>
+                        </p:tab>
+                    </p:tabView>
                 </p:panel>
             </h:form>
-
+            <ui:include src="CreatePhase.xhtml"/>
         </ui:define>
     </ui:composition>
 </html>

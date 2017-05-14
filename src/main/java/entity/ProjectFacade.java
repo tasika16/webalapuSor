@@ -38,16 +38,16 @@ public class ProjectFacade extends AbstractFacade<Project> {
     }
     
     public List<Project> findOpenProjects(){
-        return em.createQuery("SELECT p FROM Project p JOIN p.projectPhaseCollection phase WHERE p.closedAt is null", Project.class)
+        return em.createQuery("SELECT p FROM Project p WHERE p.closedAt is null", Project.class)
                 .getResultList();
     }
     
     public List<Project> findClosedProjects(){
-        return em.createQuery("SELECT p FROM Project p JOIN p.projectPhaseCollection phase WHERE p.closedAt is not null", Project.class)
+        return em.createQuery("SELECT p FROM Project p WHERE p.closedAt is not null", Project.class)
                 .getResultList();
     }
     public Project findById(Integer id){
-        return em.createQuery("SELECT p FROM Project p JOIN p.projectPhaseCollection phase WHERE p.id = :id", Project.class)
+        return em.createQuery("SELECT p FROM Project p WHERE p.id = :id", Project.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

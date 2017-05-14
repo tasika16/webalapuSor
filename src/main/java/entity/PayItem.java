@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -50,6 +53,12 @@ public class PayItem implements Serializable {
     
     @Column(name = "VALUE")
     private Integer value;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CREATED_AT", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date createdAt = new Date();
     
     @JoinColumn(name = "PROJECT_PHASE_ID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
@@ -89,6 +98,14 @@ public class PayItem implements Serializable {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public ProjectPhase getProjectPhaseId() {

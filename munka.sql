@@ -64,6 +64,7 @@ CREATE TABLE PAY_ITEM (
         (START WITH 1, INCREMENT BY 1),
   NAME varchar(255) not null,
   VALUE INT not null,
+  CREATED_AT DATE not null default CURRENT_DATE,
   PROJECT_PHASE_ID INT not null REFERENCES PROJECT_PHASE(ID)
 );
 
