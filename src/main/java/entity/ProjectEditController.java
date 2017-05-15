@@ -42,6 +42,7 @@ public class ProjectEditController implements Serializable {
     private Project project;
     private ProjectPhase newProjectPhase;
     private PayItem newPayItem;
+    private EmployeeGroup newGroup;
     
     @PostConstruct
     public void init(){
@@ -67,6 +68,26 @@ public class ProjectEditController implements Serializable {
             JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
         JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProjectDeleted"));
+    }
+    
+    public void savePhaseGroup() {
+        for (Employee e: newGroup.getEmployeeCollection()) {
+            if (!e.getProjectPhaseCollection().contains(this.newProjectPhase)) {
+                e.getProjectPhaseCollection().add(this.newProjectPhase);
+            }
+            this.newProjectPhase.getEmployeeCollection().add(e);
+            this.employeeFacade.edit(e);
+        }
+        this.projectPhaseFacade.edit(this.newProjectPhase);
+    }
+    
+    public void clearAllEmployee(ProjectPhase phase) {
+        for (Employee e: phase.getEmployeeCollection()) {
+            e.getProjectPhaseCollection().remove(phase);
+            this.employeeFacade.edit(e);
+        }
+        phase.getEmployeeCollection().clear();
+        this.projectPhaseFacade.edit(this.newProjectPhase);
     }
     
     public void lockProject(boolean locked) {
@@ -238,6 +259,14 @@ public class ProjectEditController implements Serializable {
 
     public void setNewPayItem(PayItem newPayItem) {
         this.newPayItem = newPayItem;
+    }
+
+    public EmployeeGroup getNewGroup() {
+        return newGroup;
+    }
+
+    public void setNewGroup(EmployeeGroup newGroup) {
+        this.newGroup = newGroup;
     }
     
 }

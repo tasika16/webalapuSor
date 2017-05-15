@@ -96,7 +96,9 @@
                                         <p:commandLink value="Törlés" action="#{projectEditController.removeEmployee(phase, employeeItem)}" update=":projectForm,:growl" style="margin-top:0 !important" />
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton rendered="#{!phase.completed}" id="createProjeltPhaseButton" icon="ui-icon-pencil" value="Szerkesztés" actionListener="#{projectEditController.selectProjectPhase(phase)}" update=":projectForm" oncomplete="PF('AssignEmployeeDialog').show()"/>
+                                        <p:commandButton rendered="#{!phase.completed}" icon="ui-icon-pencil" value="Szerkesztés" actionListener="#{projectEditController.selectProjectPhase(phase)}" update=":projectForm" oncomplete="PF('AssignEmployeeDialog').show()"/>
+                                        <p:commandButton rendered="#{!phase.completed}" icon="ui-icon-plus" value="Csapat hozzáadás" actionListener="#{projectEditController.selectProjectPhase(phase)}" update=":projectForm" oncomplete="PF('AssignEmployeeGroupDialog').show()"/>
+                                        <p:commandButton rendered="#{!phase.completed}" icon="ui-icon-trash" value="Összes törlése" actionListener="#{projectEditController.clearAllEmployee(phase)}" update=":projectForm" />
                                     </f:facet>
                                 </p:dataTable>
                             </div>
@@ -158,6 +160,7 @@
             <ui:include src="CreatePhase.xhtml"/>
             <ui:include src="CreatePayItem.xhtml"/>
             <ui:include src="AssignEmployee.xhtml"/>
+            <ui:include src="AssignEmployeeGroup.xhtml"/>
         </ui:define>
     </ui:composition>
 </html>
