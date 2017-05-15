@@ -5,7 +5,6 @@
  */
 package entity;
 
-import java.beans.Transient;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;

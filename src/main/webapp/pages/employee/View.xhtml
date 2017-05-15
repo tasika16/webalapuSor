@@ -11,7 +11,7 @@
         <p:dialog id="EmployeeViewDlg" widgetVar="EmployeeViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEmployeeTitle}">
             <h:form id="EmployeeViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{employeeController.selected != null}">
+                    <h:panelGrid columns="2" rendered="#{employeeController.selected != null}">
                         <h:outputText value="#{bundle.ViewEmployeeLabel_id}"/>
                         <h:outputText value="#{employeeController.selected.id}" title="#{bundle.ViewEmployeeTitle_id}"/>
                         <h:outputText value="#{bundle.ViewEmployeeLabel_name}"/>
@@ -22,8 +22,52 @@
                         <h:outputText value="#{employeeController.selected.hourlyWage}" title="Órabér"/>
                         <h:outputText value="#{bundle.ViewEmployeeLabel_employeeGroupId}"/>
                         <h:outputText value="#{employeeController.selected.employeeGroupId.name}" title="#{bundle.ViewEmployeeTitle_employeeGroupId}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="EmployeeViewDialog.hide()"/>
+                    </h:panelGrid>
+                    
+                    <p:dataTable id="projectlist" value="#{employeeController.employeeProjectPhases}" var="ppItem"
+                            selectionMode="single"
+                            paginator="true"
+                            rowKey="#{ppItem.id}"
+                            rows="10"
+                            rowsPerPageTemplate="10,20,50"
+                            paginatorPosition="bottom"
+                            style="width:500px"
+                            >
+
+                        <p:ajax event="rowSelect"   update=""/>
+                        <p:ajax event="rowUnselect" update=""/>
+
+                        <f:facet name="header">
+                            <h:outputText value="Részvétel"/>
+                        </f:facet>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Projekt"/>
+                            </f:facet>
+                            <h:outputText value="#{ppItem.projectId.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fázis"/>
+                            </f:facet>
+                            <h:outputText value="#{ppItem.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Kezdete"/>
+                            </f:facet>
+                            <h:outputText value="#{ppItem.projectId.name}">
+                                <f:convertDateTime dateStyle="full" pattern="yyyy.MM.dd" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Státusz"/>
+                            </f:facet>
+                            <h:outputText value="#{(ppItem.completed)?'Lezárt':'Nyitott'}"/>
+                        </p:column>
+                    </p:dataTable>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
