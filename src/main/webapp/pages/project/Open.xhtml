@@ -21,6 +21,12 @@
 
                         <h:outputText value="Ügyfél:" />
                         <h:outputText value="#{projectEditController.project.customerId.name}" />
+                        
+                        <h:outputText value="Becsült költség:"/>
+                        <h:outputText value="#{projectEditController.project.estimatedPrice}" />
+                        
+                        <h:outputText value="Valós költség:"/>
+                        <h:outputText value="#{projectEditController.project.fullPrice}" />
 
                         <h:outputText value="Létrehozva:" />
                         <h:outputText value="#{projectEditController.project.createdAt}">

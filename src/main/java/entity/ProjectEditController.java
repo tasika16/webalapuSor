@@ -74,9 +74,9 @@ public class ProjectEditController implements Serializable {
         for (Employee e: newGroup.getEmployeeCollection()) {
             if (!e.getProjectPhaseCollection().contains(this.newProjectPhase)) {
                 e.getProjectPhaseCollection().add(this.newProjectPhase);
+                this.newProjectPhase.getEmployeeCollection().add(e);
+                this.employeeFacade.edit(e);
             }
-            this.newProjectPhase.getEmployeeCollection().add(e);
-            this.employeeFacade.edit(e);
         }
         this.projectPhaseFacade.edit(this.newProjectPhase);
     }
@@ -121,8 +121,10 @@ public class ProjectEditController implements Serializable {
     }
     
     public void removeEmployee(ProjectPhase phase, Employee employee) {
+        employee.getProjectPhaseCollection().remove(phase);
         phase.getEmployeeCollection().remove(employee);
         try {
+            employeeFacade.edit(employee);
             projectPhaseFacade.edit(phase);
         } catch (EJBException ex) {
             JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

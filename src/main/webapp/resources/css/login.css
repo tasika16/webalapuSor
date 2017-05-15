@@ -1,6 +1,6 @@
 .login-grid h1 {
     font-size:1em;
-    color:#28722a;
+    color:#3967b2;
     text-shadow: 2px 2px 2px #ddd;
 }
 .login-grid {
@@ -29,7 +29,7 @@
 .login-grid input[type="submit"] {
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background: #3967b2;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -40,7 +40,7 @@
   cursor: pointer;
 }
 .login-grid input[type="submit"]:hover,.login-grid input[type="submit"]:active,.login-grid input[type="submit"]:focus {
-  background: #43A047;
+  background: #5394fc;
 }
 .login-grid .message {
   margin: 15px 0 0;
@@ -54,11 +54,11 @@
 
 .ui-layout-unit-content,.ui-widget-content {
     border:0;
-    background: #76b852; /* fallback for old browsers */
-    background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-    background: -moz-linear-gradient(right, #76b852, #8DC26F);
-    background: -o-linear-gradient(right, #76b852, #8DC26F);
-    background: linear-gradient(to left, #76b852, #8DC26F);
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#eee, #999); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#eee, #999); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#eee, #999); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#eee, #999); /* Standard syntax */
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;      
