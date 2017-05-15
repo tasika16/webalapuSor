@@ -21,11 +21,13 @@ public class DashboardController implements Serializable {
     private entity.ProjectFacade projectFacade;
     private PieChartModel projectStatusModel;
     private HorizontalBarChartModel runningProjectBarModel; 
+    private HorizontalBarChartModel incomeBarModel;
     
     @PostConstruct
     public void init() {
         createProjectStatusModel();
         createRunningProjectBarModel();
+        createIncomeBarModel();
     }
  
     public PieChartModel getProjectStatusModel() {
@@ -34,6 +36,10 @@ public class DashboardController implements Serializable {
 
     public HorizontalBarChartModel getRunningProjectBarModel() {
         return runningProjectBarModel;
+    }
+    
+    public HorizontalBarChartModel getIncomeBarModel(){
+        return incomeBarModel;
     }
      
     private void createProjectStatusModel() {
@@ -88,5 +94,56 @@ public class DashboardController implements Serializable {
         yAxis.setLabel("Projekt");        
     }
 
+    private void createIncomeBarModel() {
+        incomeBarModel = new HorizontalBarChartModel();
+        List<Project> projectList = projectFacade.findAll();
+        
+        for (Project project : projectList) {
+            
+        }
+        
+        ChartSeries q1 = new ChartSeries();
+        q1.setLabel("Első negyedév");
+        
+        
+        ChartSeries q2 = new ChartSeries();
+        q2.setLabel("Második negyedév");
+        q2.set("2015",1.5);
+        q2.set("2016",1);
+        q2.set("2017",2);
+        
+        ChartSeries q3 = new ChartSeries();
+        q3.setLabel("Harmadik negyedév");
+        q3.set("2015",1.2);
+        q3.set("2016",1);
+        q3.set("2017",2);
+        
+        ChartSeries q4 = new ChartSeries();
+        q4.setLabel("Negyedik negyedév");
+        q4.set("2015",1.5);
+        q4.set("2016",1);
+        q4.set("2017",2);
+        
+        int max=10;
+        
+        incomeBarModel.addSeries(q1);
+        incomeBarModel.addSeries(q2);
+        incomeBarModel.addSeries(q3);
+        incomeBarModel.addSeries(q4);
+        
+        incomeBarModel.setTitle("Évi bevételek negyedévenként");
+        incomeBarModel.setLegendPosition("e");
+        incomeBarModel.setStacked(true);
+         
+        Axis xAxis = incomeBarModel.getAxis(AxisType.X);
+        xAxis.setLabel("Kész / Hátravan");
+        xAxis.setMin(0);
+        xAxis.setMax(max);
+         
+        Axis yAxis = incomeBarModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Projekt");    
+    }
+
+    
      
 }

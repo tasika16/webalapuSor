@@ -15,6 +15,7 @@
         <ui:define name="body">
             <p:chart type="pie" model="#{dashboardController.projectStatusModel}" style="width:400px; height:300px"/>
             <p:chart type="bar" model="#{dashboardController.runningProjectBarModel}" style="height:300px"/>
+            <p:chart type="bar" model="#{dashboardController.incomeBarModel}" style="height:400px" />
         </ui:define>
     </ui:composition>
 
