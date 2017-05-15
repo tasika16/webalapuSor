@@ -27,6 +27,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 /**
  *
@@ -188,5 +190,11 @@ public class Project implements Serializable {
         }
         return ret;
     }
-
+    
+    public Integer getDurationInDays(){
+        if (this.closedAt == null) {
+            return null;
+        }
+        return Days.daysBetween(new DateTime(this.createdAt), new DateTime(this.closedAt)).getDays();
+    }
 }

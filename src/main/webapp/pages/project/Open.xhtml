@@ -39,6 +39,9 @@
                             <f:convertDateTime dateStyle="full" pattern="yyyy.MM.dd" />
                         </h:outputText>
                         
+                        <h:outputText value="Időigény:" rendered ="#{projectEditController.project.closedAt != null}" />
+                        <h:outputText value="#{projectEditController.project.durationInDays} nap" rendered="#{projectEditController.project.closedAt != null}" />
+                        
                         <p:commandButton rendered="#{projectEditController.allowedToLockProject()}" value="Projekt lezárása" icon="ui-icon-locked" update=":projectForm" actionListener="#{projectEditController.lockProject(true)}" />
                         <p:commandButton rendered="#{projectEditController.project.closedAt != null}" value="Projekt újranyitása" icon="ui-icon-unlocked" update=":projectForm" actionListener="#{projectEditController.lockProject(false)}" />
                     </h:panelGrid>
