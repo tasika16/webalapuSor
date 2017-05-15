@@ -10,16 +10,14 @@
 
         <p:dialog id="ProjectPhaseCreateDlg" widgetVar="ProjectPhaseCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Munkafázis">
             <h:form id="ProjectPhaseCreateForm">
-                <h:inputHidden id="projectId" value="#{projectEditController.id}" />
-                <h:panelGroup id="display">
+                <h:panelGroup>
                     <p:panelGrid columns="2">
                         <p:outputLabel value="#{bundle.CreateProjectPhaseLabel_name}" for="name" />
-                        <p:inputText id="name" value="" title="#{bundle.CreateProjectPhaseTitle_name}" required="true" requiredMessage="#{bundle.CreateProjectPhaseRequiredMessage_name}"/>
+                        <p:inputText id="name" value="#{projectEditController.newProjectPhase.name}" title="#{bundle.CreateProjectPhaseTitle_name}" required="true" requiredMessage="#{bundle.CreateProjectPhaseRequiredMessage_name}"/>
                         <p:outputLabel value="Becsült ár" for="estimatedPrice" />
-                        <p:inputText id="estimatedPrice" value="#{projectPhaseController.selected.estimatedPrice}" />
+                        <p:inputText id="estimatedPrice" value="#{projectEditController.newProjectPhase.estimatedPrice}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{projectPhaseController.create}" value="#{bundle.Save}" update="display,:projectForm,:growl" oncomplete="handleSubmit(args,'ProjectPhaseCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ProjectPhaseCreateDialog.hide()"/>
+                    <p:commandButton actionListener="#{projectEditController.saveProjectPhase()}" value="#{bundle.Save}" update=":projectForm,:growl" oncomplete="handleSubmit(args,'ProjectPhaseCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

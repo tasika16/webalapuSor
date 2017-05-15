@@ -63,10 +63,17 @@
                             </f:facet>
                             <p:progressBar value="#{item.progressPercent}" labelTemplate="{value}%" displayOnly="true"/>
                         </p:column>
+                        
+                        <p:column rendered="#{projectController.showArchived}">
+                            <f:facet name="header">
+                                <h:outputText value="Időigény"/>
+                            </f:facet>
+                            <h:outputText value="#{item.durationInDays} nap" />
+                        </p:column>
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProjectTitle_customerId}"/>
+                                <h:outputText value="Ügyfél"/>
                             </f:facet>
                             <h:outputText value="#{item.customerId.name}"/>
                         </p:column>

@@ -27,6 +27,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 /**
  *
@@ -170,5 +172,29 @@ public class Project implements Serializable {
         if (all < 1) { return 0; }
         return (int)(done/all*100);
     }
-
+    
+    public Integer getFullPrice(){
+        Integer ret = 0;
+        Iterator<ProjectPhase> phases = this.projectPhaseCollection.iterator();
+        while(phases.hasNext()) {
+            ret += phases.next().getFullPrice();
+        }
+        return ret;
+    }
+    
+    public Integer getEstimatedPrice(){
+        Integer ret = 0;
+        Iterator<ProjectPhase> phases = this.projectPhaseCollection.iterator();
+        while(phases.hasNext()) {
+            ret += phases.next().getEstimatedPrice();
+        }
+        return ret;
+    }
+    
+    public Integer getDurationInDays(){
+        if (this.closedAt == null) {
+            return null;
+        }
+        return Days.daysBetween(new DateTime(this.createdAt), new DateTime(this.closedAt)).getDays();
+    }
 }

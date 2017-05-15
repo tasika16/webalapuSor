@@ -38,3 +38,8 @@
     float:left;
     position:relative;
 }
+.ui-tabs-nav .phase-closed {
+    background-color: rgba(0,255,0,0.3) !important;
+}
+.ui-tabs-nav .phase-open {
+}

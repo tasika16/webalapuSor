@@ -120,7 +120,7 @@ public class EmployeeController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Employee.class)
+    @FacesConverter(forClass = Employee.class, value = "employeeConverter")
     public static class EmployeeControllerConverter implements Converter {
 
         @Override

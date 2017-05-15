@@ -27,5 +27,10 @@ public class ProjectPhaseFacade extends AbstractFacade<ProjectPhase> {
     public ProjectPhaseFacade() {
         super(ProjectPhase.class);
     }
-    
+        
+    public ProjectPhase findById(Integer id){
+        return em.createQuery("SELECT p FROM ProjectPhase p WHERE p.id = :id", ProjectPhase.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
 }
