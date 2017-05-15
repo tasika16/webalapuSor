@@ -4,6 +4,7 @@ import entity.util.JsfUtil;
 import entity.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -11,7 +12,6 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -24,6 +24,8 @@ public class EmployeeController implements Serializable {
 
     @EJB
     private entity.EmployeeFacade ejbFacade;
+    @EJB
+    private entity.ProjectFacade projectFacade;
     private List<Employee> items = null;
     private Employee selected;
 
@@ -119,7 +121,14 @@ public class EmployeeController implements Serializable {
     public List<Employee> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
-
+    
+    public List<ProjectPhase> getEmployeeProjectPhases(){
+        if (this.selected == null) {
+            return new ArrayList<ProjectPhase>();
+        }
+        return this.projectFacade.findProjectsPhaseForEmployee(this.selected.getId());
+    }
+    
     @FacesConverter(forClass = Employee.class, value = "employeeConverter")
     public static class EmployeeControllerConverter implements Converter {
 

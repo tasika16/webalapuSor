@@ -51,4 +51,12 @@ public class ProjectFacade extends AbstractFacade<Project> {
                 .setParameter("id", id)
                 .getSingleResult();
     }
+    public List<ProjectPhase> findProjectsPhaseForEmployee(Integer employeeId){
+        return em.createQuery("SELECT pp FROM ProjectPhase pp"
+                + " JOIN pp.projectId p"
+                + " LEFT JOIN pp.employeeCollection e"
+                + " WHERE e.id = :id", ProjectPhase.class)
+                .setParameter("id", employeeId)
+                .getResultList();
+    }
 }

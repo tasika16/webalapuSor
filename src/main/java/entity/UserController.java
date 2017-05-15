@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.bean.ManagedProperty;
 import javax.inject.Named;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -20,17 +22,17 @@ import javax.faces.view.ViewScoped;
 @Named("userController")
 @ViewScoped
 public class UserController implements Serializable {
-
     @EJB
     private entity.UserFacade ejbFacade;
     private List<User> items = null;
     private User selected;
     
-    public User.Role[] getRoles() {
-        return User.Role.values();
-    }
     
     public UserController() {
+    }
+    
+    public User.Role[] getRoles() {
+        return User.Role.values();
     }
 
     public User getSelected() {
