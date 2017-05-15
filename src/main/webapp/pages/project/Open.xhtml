@@ -23,18 +23,30 @@
                         <h:outputText value="#{projectEditController.project.customerId.name}" />
 
                         <h:outputText value="Létrehozva:" />
-                        <h:outputText value="#{projectEditController.project.createdAt}" />
+                        <h:outputText value="#{projectEditController.project.createdAt}">
+                            <f:convertDateTime dateStyle="full" pattern="yyyy.MM.dd"/>
+                        </h:outputText>
 
-                        <h:outputText value="Státusz:" />
-                        <p:progressBar rendered="#{projectEditController.project.closedAt == null}" value="#{projectEditController.project.progressPercent}" labelTemplate="{value}%" displayOnly="true"/>
-                        <h:outputText rendered="#{projectEditController.project.closedAt != null}" value="Lezárva: #{projectEditController.project.closedAt}" />
+                        <h:outputText value="#{(projectEditController.project.closedAt == null)?'Státusz:':'Lezárt:'}" />
+                        <p:progressBar rendered="#{projectEditController.project.closedAt == null}" value="#{projectEditController.project.progressPercent}" labelTemplate="{value}%" displayOnly="true" style="width:150px;"/>
+                        <h:outputText rendered="#{projectEditController.project.closedAt != null}" value="#{projectEditController.project.closedAt}">
+                            <f:convertDateTime dateStyle="full" pattern="yyyy.MM.dd" />
+                        </h:outputText>
+                        
+                        <p:commandButton rendered="#{projectEditController.allowedToLockProject()}" value="Projekt lezárása" icon="ui-icon-locked" update=":projectForm" actionListener="#{projectEditController.lockProject(true)}" />
+                        <p:commandButton rendered="#{projectEditController.project.closedAt != null}" value="Projekt újranyitása" icon="ui-icon-unlocked" update=":projectForm" actionListener="#{projectEditController.lockProject(false)}" />
                     </h:panelGrid>
                 </p:panel>
                 
                 <p:panel id="projectPhasePanel" header="Munkafázisok">
-                    <p:commandButton id="createPhaseButton" icon="ui-icon-plus" value="Új munkafázis" actionListener="#{projectPhaseController.prepareCreate}" oncomplete="PF('ProjectPhaseCreateDialog').show()" style="margin-bottom:10px;"/>
+                    <!--====== NEW PHASE BUTTON ========-->
+                    <p:commandButton id="createPhaseButton" rendered="#{projectEditController.project.closedAt == null}" icon="ui-icon-plus" value="Új munkafázis" update=":projectForm,:growl" actionListener="#{projectEditController.createProjectPhase()}" oncomplete="PF('ProjectPhaseCreateDialog').show()" style="margin-bottom:10px;"/>
+                    
                     <p:tabView value="#{projectEditController.project.projectPhaseCollection}" var="phase">
-                        <p:tab title="#{phase.name}">
+                        <p:tab title="#{phase.name}" titleStyleClass="#{(phase.completed == true)?'phase-closed':'phase-open'}" >
+                            
+                            <!--====== BASIC COL ========-->
+                            
                             <div class="col-33">
                                 <h:panelGrid columns="2" cellpadding="5">
                                     <h:outputText value="Megnevezés:"/>
@@ -43,10 +55,13 @@
                                     <h:outputText value="#{phase.estimatedPrice}" />
                                     <h:outputText value="Valós költség:"/>
                                     <h:outputText value="#{phase.fullPrice}" />
-                                    <h:outputText value="Törlés:"/>
-                                    <p:commandLink update=":projectForm" actionListener="#{projectEditController.removePhase(phase)}" title="Törlés" styleClass="ui-icon ui-icon-trash" style="float:left;margin-right:10px" />
+                                    <h:outputText value="Ez a munkafázis lezárt!" rendered="#{phase.completed}" />
+                                    <p:commandButton rendered="#{!phase.completed}" value="Fázis lezárása" icon="ui-icon-locked" update=":projectForm" actionListener="#{projectEditController.lockPhase(phase)}" />
+                                    <p:commandButton rendered="#{!phase.completed}" value="Fázis törlése"  icon="ui-icon-trash" update=":projectForm" actionListener="#{projectEditController.removePhase(phase)}" />                                        
                                 </h:panelGrid>                                    
                             </div>
+                            
+                            <!--====== EMPLOYEE COL ========-->
                             
                             <div class="col-33">
                                 <p:dataTable id="employeelist" value="#{phase.employeeCollection}" var="employeeItem"
@@ -77,10 +92,16 @@
                                         </f:facet>
                                         <h:outputText value="#{employeeItem.employeeGroupId.name}"/>
                                     </p:column>
+                                    <p:column rendered="#{!phase.completed}">
+                                        <p:commandLink value="Törlés" action="#{projectEditController.removeEmployee(phase, employeeItem)}" update=":projectForm,:growl" style="margin-top:0 !important" />
+                                    </p:column>
                                     <f:facet name="footer">
+                                        <p:commandButton rendered="#{!phase.completed}" id="createProjeltPhaseButton" icon="ui-icon-pencil" value="Szerkesztés" actionListener="#{projectEditController.selectProjectPhase(phase)}" update=":projectForm" oncomplete="PF('AssignEmployeeDialog').show()"/>
                                     </f:facet>
                                 </p:dataTable>
                             </div>
+                            
+                            <!--====== PAYITEM COL ========-->
                             
                             <div class="col-33">
                                 <p:dataTable id="payitemlist" value="#{phase.payItemCollection}" var="payItem"
@@ -103,7 +124,9 @@
                                         <f:facet name="header">
                                             <h:outputText value="Kelt."/>
                                         </f:facet>
-                                        <h:outputText value="#{payItem.createdAt}"/>
+                                        <h:outputText value="#{payItem.createdAt}">
+                                             <f:convertDateTime dateStyle="full" pattern="yyyy.MM.dd"/>
+                                        </h:outputText>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
@@ -117,7 +140,11 @@
                                         </f:facet>
                                         <h:outputText value="#{payItem.value}"/>
                                     </p:column>
+                                    <p:column rendered="#{!phase.completed}">
+                                        <p:commandLink value="Törlés" action="#{projectEditController.removePayItem(phase, payItem)}" update=":projectForm,:growl" style="margin-top:0 !important" />
+                                    </p:column>
                                     <f:facet name="footer">
+                                        <p:commandButton rendered="#{!phase.completed}" id="createPayItemButton" icon="ui-icon-plus" value="Új tétel kiírása" actionListener="#{projectEditController.createPayItem(phase)}" update=":projectForm" oncomplete="PF('PayItemCreateDialog').show()"/>
                                     </f:facet>
                                 </p:dataTable>
 
@@ -129,6 +156,8 @@
                 </p:panel>
             </h:form>
             <ui:include src="CreatePhase.xhtml"/>
+            <ui:include src="CreatePayItem.xhtml"/>
+            <ui:include src="AssignEmployee.xhtml"/>
         </ui:define>
     </ui:composition>
 </html>

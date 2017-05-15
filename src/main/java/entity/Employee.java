@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -70,7 +71,7 @@ public class Employee implements Serializable {
     @JoinTable(name = "EMPLOYEE_TO_PROJECT_PHASE", joinColumns = {
         @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "PROJECT_PHASE_ID", referencedColumnName = "ID", nullable = false)})
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     private Collection<ProjectPhase> projectPhaseCollection;
     
     @JoinTable(name = "EMPLOYEE_TO_SKILL", joinColumns = {
@@ -95,7 +96,20 @@ public class Employee implements Serializable {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
-
+    
+    public String skillString(){
+        String ret = "";
+        int i=0;
+        for (Skill skill : this.skillCollection) {
+            if (i>0) {
+                ret += ", ";
+            }
+            ret += skill.getName();
+            i++;
+        }
+        return ret;
+    }
+    
     public Integer getId() {
         return id;
     }

@@ -170,5 +170,23 @@ public class Project implements Serializable {
         if (all < 1) { return 0; }
         return (int)(done/all*100);
     }
+    
+    public Integer getFullPrice(){
+        Integer ret = 0;
+        Iterator<ProjectPhase> phases = this.projectPhaseCollection.iterator();
+        while(phases.hasNext()) {
+            ret += phases.next().getFullPrice();
+        }
+        return ret;
+    }
+    
+    public Integer getEstimatedPrice(){
+        Integer ret = 0;
+        Iterator<ProjectPhase> phases = this.projectPhaseCollection.iterator();
+        while(phases.hasNext()) {
+            ret += phases.next().getEstimatedPrice();
+        }
+        return ret;
+    }
 
 }

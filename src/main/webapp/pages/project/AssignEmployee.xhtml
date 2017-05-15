@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AssignEmployeeDlg" widgetVar="AssignEmployeeDialog" modal="true" resizable="false" appendTo="@(body)" header="Összerendelés">
+            <h:form id="AssignEmployeeForm">
+                <h:panelGroup>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Dolgozó" for="assocCollection" />
+                        <p:selectManyCheckbox id="assocCollection" value="#{projectEditController.newProjectPhase.employeeCollection}" converter="employeeConverter" layout="grid" columns="1">
+                            <f:selectItems value="#{employeeController.itemsAvailableSelectMany}"
+                                           var="employeeItem"
+                                           itemLabel="#{employeeItem.name} (#{employeeItem.skillString()})"
+                                           itemValue="#{employeeItem}" />
+                        </p:selectManyCheckbox>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{projectEditController.saveEmployeePhaseAssoc()}" value="#{bundle.Save}" update=":projectForm,:growl" oncomplete="handleSubmit(args,'AssignEmployeeDialog');"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

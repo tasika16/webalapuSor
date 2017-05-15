@@ -58,7 +58,7 @@ public class ProjectPhase implements Serializable {
     @Column(name = "COMPLETED")
     private Boolean completed;
     
-    @ManyToMany(mappedBy = "projectPhaseCollection")
+    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "projectPhaseCollection")
     private Collection<Employee> employeeCollection;
 
     @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID", nullable = false)
@@ -174,4 +174,5 @@ public class ProjectPhase implements Serializable {
         }
         return ret;
     }
+
 }
