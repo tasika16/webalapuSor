@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -9,6 +10,7 @@ import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.PieChartModel;
@@ -21,13 +23,13 @@ public class DashboardController implements Serializable {
     private entity.ProjectFacade projectFacade;
     private PieChartModel projectStatusModel;
     private HorizontalBarChartModel runningProjectBarModel; 
-    private HorizontalBarChartModel incomeBarModel;
+    private BarChartModel incomeBarModel;
     
     @PostConstruct
     public void init() {
         createProjectStatusModel();
         createRunningProjectBarModel();
-        createIncomeBarModel();
+        //createIncomeBarModel();
     }
  
     public PieChartModel getProjectStatusModel() {
@@ -38,7 +40,7 @@ public class DashboardController implements Serializable {
         return runningProjectBarModel;
     }
     
-    public HorizontalBarChartModel getIncomeBarModel(){
+    public BarChartModel getIncomeBarModel(){
         return incomeBarModel;
     }
      
@@ -94,56 +96,40 @@ public class DashboardController implements Serializable {
         yAxis.setLabel("Projekt");        
     }
 
-    private void createIncomeBarModel() {
-        incomeBarModel = new HorizontalBarChartModel();
+    /*private void createIncomeBarModel() {
+        incomeBarModel = new BarChartModel();
         List<Project> projectList = projectFacade.findAll();
+        int sum = 0;
+        List<Integer> years= new ArrayList<>();
         
-        for (Project project : projectList) {
-            
+        projectList.forEach((project) -> {
+            years.add(project.getClosedAt().getYear());
+        });
+        
+        int i=0;
+        for(Project project : projectList){
+            if(project.getClosedAt().getYear()==years.get(i)){
+                for(ProjectPhase phase : project.getProjectPhaseCollection()){
+                    sum += phase.getEstimatedPrice();
+                    
+                    ChartSeries year = new ChartSeries();
+                    year.set(years.get(i), sum);
+                    incomeBarModel.addSeries(year);
+                }
+            }
+            i++;
         }
         
-        ChartSeries q1 = new ChartSeries();
-        q1.setLabel("Első negyedév");
-        
-        
-        ChartSeries q2 = new ChartSeries();
-        q2.setLabel("Második negyedév");
-        q2.set("2015",1.5);
-        q2.set("2016",1);
-        q2.set("2017",2);
-        
-        ChartSeries q3 = new ChartSeries();
-        q3.setLabel("Harmadik negyedév");
-        q3.set("2015",1.2);
-        q3.set("2016",1);
-        q3.set("2017",2);
-        
-        ChartSeries q4 = new ChartSeries();
-        q4.setLabel("Negyedik negyedév");
-        q4.set("2015",1.5);
-        q4.set("2016",1);
-        q4.set("2017",2);
-        
-        int max=10;
-        
-        incomeBarModel.addSeries(q1);
-        incomeBarModel.addSeries(q2);
-        incomeBarModel.addSeries(q3);
-        incomeBarModel.addSeries(q4);
-        
+        int max = 1;
         incomeBarModel.setTitle("Évi bevételek negyedévenként");
         incomeBarModel.setLegendPosition("e");
-        incomeBarModel.setStacked(true);
          
         Axis xAxis = incomeBarModel.getAxis(AxisType.X);
-        xAxis.setLabel("Kész / Hátravan");
+        xAxis.setLabel("Évek");
         xAxis.setMin(0);
         xAxis.setMax(max);
          
         Axis yAxis = incomeBarModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Projekt");    
-    }
-
-    
-     
+        yAxis.setLabel("Bevételek összege");    
+    }*/
 }
