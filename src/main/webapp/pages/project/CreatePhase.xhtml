@@ -18,7 +18,6 @@
                         <p:inputText id="estimatedPrice" value="#{projectEditController.newProjectPhase.estimatedPrice}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{projectEditController.saveProjectPhase()}" value="#{bundle.Save}" update=":projectForm,:growl" oncomplete="handleSubmit(args,'ProjectPhaseCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ProjectPhaseCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
