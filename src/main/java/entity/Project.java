@@ -197,4 +197,5 @@ public class Project implements Serializable {
         }
         return Days.daysBetween(new DateTime(this.createdAt), new DateTime(this.closedAt)).getDays();
     }
+    
 }

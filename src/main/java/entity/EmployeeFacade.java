@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -38,6 +40,22 @@ public class EmployeeFacade extends AbstractFacade<Employee> {
     @Override
     public List<Employee> findAll() {
         return em.createNamedQuery("Employee.findAll", Employee.class).getResultList();
+    }
+    
+    
+    public List<Employee> findFreeEmployees() {
+        List<Employee> ret = findAll();
+        List<ProjectPhase> ppList = em.createQuery("select pp from ProjectPhase pp").getResultList();
+        
+        for(ProjectPhase pp: ppList) {
+            if (!pp.getCompleted()) {
+                for(Employee e: pp.getEmployeeCollection()) {
+                    ret.remove(e);
+                }
+            }
+        }
+
+        return ret;
     }
     
 }

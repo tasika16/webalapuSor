@@ -2,17 +2,19 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import org.joda.time.DateTime;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.PieChartModel;
 
 @Named("dashboardController")
@@ -21,29 +23,45 @@ import org.primefaces.model.chart.PieChartModel;
 public class DashboardController implements Serializable {
     @EJB
     private entity.ProjectFacade projectFacade;
+    @EJB
+    private entity.EmployeeFacade employeeFacade;
     private PieChartModel projectStatusModel;
-    private HorizontalBarChartModel runningProjectBarModel; 
-    private BarChartModel incomeBarModel;
+    private BarChartModel yearIncomeBarModel;
+    private List<Project> openProjects = new ArrayList<>();
+    private List<Employee> freeEmployees = new ArrayList<>();
     
     @PostConstruct
     public void init() {
+        this.openProjects = projectFacade.findOpenProjects();
+        this.freeEmployees = employeeFacade.findFreeEmployees();
         createProjectStatusModel();
         createRunningProjectBarModel();
-        //createIncomeBarModel();
+    }
+
+    public List<Employee> getFreeEmployees() {
+        return freeEmployees;
+    }
+
+    public void setFreeEmployees(List<Employee> freeEmployees) {
+        this.freeEmployees = freeEmployees;
     }
  
     public PieChartModel getProjectStatusModel() {
         return projectStatusModel;
     }
 
-    public HorizontalBarChartModel getRunningProjectBarModel() {
-        return runningProjectBarModel;
+    public BarChartModel getYearIncomeBarModel() {
+        return yearIncomeBarModel;
+    }
+
+    public List<Project> getOpenProjects() {
+        return openProjects;
+    }
+
+    public void setOpenProjects(List<Project> openProjects) {
+        this.openProjects = openProjects;
     }
     
-    public BarChartModel getIncomeBarModel(){
-        return incomeBarModel;
-    }
-     
     private void createProjectStatusModel() {
         projectStatusModel = new PieChartModel();
         
@@ -55,81 +73,61 @@ public class DashboardController implements Serializable {
     }
 
     private void createRunningProjectBarModel() {
-        runningProjectBarModel = new HorizontalBarChartModel();
+        yearIncomeBarModel = new BarChartModel();
  
-        List<Project> projectList = projectFacade.findOpenProjects();
-        ChartSeries done = new ChartSeries();
-        done.setLabel("Kész");
-        ChartSeries open = new ChartSeries();
-        open.setLabel("Folyamatban");
-        int max = 1;
-        for (Project project: projectList) {
-            int doneCounter = 0;
-            int openCounter = 0;
-            for(ProjectPhase phase: project.getProjectPhaseCollection()) {
-                if (Boolean.TRUE.equals(phase.getCompleted())) {
-                    doneCounter++;
-                } else {
-                    openCounter++;
-                }
+        List<Project> projectList = projectFacade.findClosedProjects();
+        Map<Integer,Integer> valMap = new HashMap();
+        Map<Integer,Integer> valMapEst = new HashMap();
+        for (Project project : projectList) {
+            Integer year = new DateTime(project.getCreatedAt()).getYear();
+            if (!valMap.containsKey(year)) {
+                valMap.put(year, project.getFullPrice());
+                valMapEst.put(year, project.getEstimatedPrice());
+            } else {
+                valMap.put(year, valMap.get(year) + project.getFullPrice());
+                valMapEst.put(year, valMap.get(year) + project.getEstimatedPrice());
             }
-            
-            done.set(project.getName(), doneCounter);
-            open.set(project.getName(), openCounter);
-            if ((doneCounter + openCounter) > max) {
-                max = doneCounter + openCounter;
+
+        }        
+        
+        Map<Integer,ChartSeries> seriesMap = new HashMap();
+        ChartSeries csE = new ChartSeries();
+        csE.setLabel("Bevétel");
+        ChartSeries csF = new ChartSeries();
+        csF.setLabel("Becslés");
+        int from = new DateTime().getYear();
+        for (int i=from-10; i<=from;i++) {
+            Integer val = valMap.get(i);
+            Integer valE = valMapEst.get(i);
+            csF.set(i, (val == null)?0:val);
+            csE.set(i, (valE == null)?0:valE);
+            seriesMap.put(i, csF);
+        }
+        yearIncomeBarModel.addSeries(csF);
+        yearIncomeBarModel.addSeries(csE);
+        
+        yearIncomeBarModel.setTitle("Bevétel");
+        yearIncomeBarModel.setLegendPosition("ne");
+        yearIncomeBarModel.setStacked(false);
+        
+        int max = 0;
+        for (Integer y: seriesMap.keySet()) {
+            Integer val = valMap.get(y);
+            Integer valE = valMapEst.get(y);
+            if (val != null && val > max) {
+                max = val;
+            }
+            if (valE != null && valE > max) {
+                max = valE;
             }
         }
-        runningProjectBarModel.addSeries(done);
-        runningProjectBarModel.addSeries(open);
+        Axis xAxis = yearIncomeBarModel.getAxis(AxisType.X);
+        xAxis.setLabel("Év");
          
-        runningProjectBarModel.setTitle("Futó projektek állapota");
-        runningProjectBarModel.setLegendPosition("e");
-        runningProjectBarModel.setStacked(true);
-         
-        Axis xAxis = runningProjectBarModel.getAxis(AxisType.X);
-        xAxis.setLabel("Kész / Hátravan");
-        xAxis.setMin(0);
-        xAxis.setMax(max);
-         
-        Axis yAxis = runningProjectBarModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Projekt");        
+        Axis yAxis = yearIncomeBarModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Összeg");        
+        yAxis.setMax(max*1.20);
+        yAxis.setMin(0);
     }
 
-    /*private void createIncomeBarModel() {
-        incomeBarModel = new BarChartModel();
-        List<Project> projectList = projectFacade.findAll();
-        int sum = 0;
-        List<Integer> years= new ArrayList<>();
-        
-        projectList.forEach((project) -> {
-            years.add(project.getClosedAt().getYear());
-        });
-        
-        int i=0;
-        for(Project project : projectList){
-            if(project.getClosedAt().getYear()==years.get(i)){
-                for(ProjectPhase phase : project.getProjectPhaseCollection()){
-                    sum += phase.getEstimatedPrice();
-                    
-                    ChartSeries year = new ChartSeries();
-                    year.set(years.get(i), sum);
-                    incomeBarModel.addSeries(year);
-                }
-            }
-            i++;
-        }
-        
-        int max = 1;
-        incomeBarModel.setTitle("Évi bevételek negyedévenként");
-        incomeBarModel.setLegendPosition("e");
-         
-        Axis xAxis = incomeBarModel.getAxis(AxisType.X);
-        xAxis.setLabel("Évek");
-        xAxis.setMin(0);
-        xAxis.setMax(max);
-         
-        Axis yAxis = incomeBarModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Bevételek összege");    
-    }*/
 }
